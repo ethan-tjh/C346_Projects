@@ -3,10 +3,22 @@ import {View, Text, ScrollView, Button, Alert} from 'react-native';
 import QuizQn from './components/quiz';
 import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
 const QuizApp = () => {
-    const [inputAnswer, setInputAnswer] = useState('');
-    const Checker = (inputAnswer) => {
+    const [inputAnswer1, setInputAnswer1] = useState('');
+    const [pickerAnswer1, setPickerAnswer1] = useState('');
+    const [inputAnswer2, setInputAnswer2] = useState('');
+    const [pickerAnswer2, setPickerAnswer2] = useState('');
+    const Checker = (inputAnswer1, inputAnswer2, pickerAnswer1, pickerAnswer2) => {
         let marks = 0;
-        if (inputAnswer === 'ohayou') {
+        if (pickerAnswer1 === 'sen sei') {
+            marks++;
+        }
+        if (inputAnswer1.toLowerCase() === 'ohayou') {
+            marks++;
+        }
+        if (pickerAnswer2 === 'かくれんぼ') {
+            marks++;
+        }
+        if (inputAnswer2.toLowerCase() === 'merry go round') {
             marks++;
         }
         return marks
@@ -33,16 +45,33 @@ const QuizApp = () => {
                     option1="xian sheng"
                     option2="sen sei"
                     option3="saki nama"
+                    onPickerAnswer={(value) => setPickerAnswer1(value)}
                 />
                 <QuizQn
                     qnStyle='input'
+                    photo={{uri: 'https://www.shutterstock.com/image-illustration/vector-japanese-greeting-ohayou-sticker-260nw-2311324409.jpg'}}
                     qn="How would you write/type this in romaji?"
-                    onInputAnswer={(value) => setInputAnswer(value)}
+                    onInputAnswer={(value) => setInputAnswer1(value)}
+                />
+                <QuizQn
+                    qnStyle='picker'
+                    photo={require('./img/kakurenbo.png')}
+                    qn="How would you write this in hiragana?"
+                    option1="こくれんほ"
+                    option2="はいど"
+                    option3="かくれんぼ"
+                    onPickerAnswer={(value) => setPickerAnswer2(value)}
+                />
+                <QuizQn
+                    qnStyle='input'
+                    photo={{uri: 'https://www.sonymusic.co.jp/img/common/artist_image/70009000/70009629/images/45777.jpg'}}
+                    qn="For the text in yellow, how would you translate this to English?"
+                    onInputAnswer={(value) => setInputAnswer2(value)}
                 />
                 <Button onPress={ () => {
-                    const marks = Checker(inputAnswer);
-                    if (marks < 3) {
-                        Alert.alert("You've gotten " + {} + " answers correct.")
+                    const marks = Checker(inputAnswer1, inputAnswer2, pickerAnswer1, pickerAnswer2);
+                    if (marks < 4) {
+                        Alert.alert("You've gotten " + marks + " answers correct.")
                     } else {
                         Alert.alert("You've gotten all of them correct! Good job!")
                     }

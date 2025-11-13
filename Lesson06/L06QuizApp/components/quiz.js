@@ -9,15 +9,15 @@ const InputBox = ({label, onChangeText}) => {
         </View>
     )
 };
-const QuizQn = ({photo, qn, qnStyle, option1, option2, option3, onInputAnswer})=> {
+const QuizQn = ({photo, qn, qnStyle, option1, option2, option3, onInputAnswer, onPickerAnswer})=> {
     if (qnStyle === 'picker') {
         return (
             <View style={{marginBottom: 10}}>
                 <Image source={photo}
-                       style={{width: 375, height: 375}}/>
+                       style={{width: 370, height: 370}}/>
                 <Text style={{color: "#4B4B4B"}}>{qn}</Text>
-                <Picker onValueChange={(value) => console.log(value)}>
-                    <Picker.Item label="Pick an option" value=""/>
+                <Picker onValueChange={(value) => onPickerAnswer(value)}>
+                    <Picker.Item label="Pick an option" value="" enabled={false}/>
                     <Picker.Item label={option1} value={option1}/>
                     <Picker.Item label={option2} value={option2}/>
                     <Picker.Item label={option3} value={option3}/>
@@ -28,7 +28,7 @@ const QuizQn = ({photo, qn, qnStyle, option1, option2, option3, onInputAnswer})=
         return (
             <View style={{marginBottom: 10}}>
                 <Image source={photo}
-                       style={{width: 375, height: 375}}/>
+                       style={{width: 370, height: 390}}/>
                 <Text style={{color: "#4B4B4B"}}>{qn}</Text>
                 <InputBox onChangeText={onInputAnswer}/>
             </View>
